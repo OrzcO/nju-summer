@@ -12,6 +12,173 @@
 		<script src="../../resources/js/bootstrap.min.js"></script>
 		
 	</head>
+
+
+	<script type="text/javascript">
+
+        var login = false;
+
+        var id;
+        var name;
+        var url;
+
+
+        function getSession() {
+
+            $.ajax({
+                url : "/getSession.do",
+                type : "get",
+                dataType : "json",
+                async : true,
+                success : function (data) {
+                    if (data != null) {
+
+                        login = true;
+                        id = data.id;
+                        name = data.name;
+                        url = data.url;
+
+//                      设置用户用户的url !!!
+                        $("#img").attr('src',url);
+                        $("div.character").find("span").text(name);
+
+                        console.log(data);
+                    } else {
+                        login = false;
+                    }
+
+                    if (login == false) {
+                        alert("请登录");
+                        location.href = "/toLogin.do";
+                    }
+
+
+
+                },
+                error : function (data) {
+                    location.href = "/toLogin.do";
+                }
+            });
+
+        }
+
+        function loadFile() {
+			$("#img-name").val($('#file')[0].files[0].name);
+        }
+
+        $(function () {
+
+            getSession();
+            
+
+            $("#upload-btn").click(function () {
+
+                var file = $('#file')[0].files[0];
+
+                // 判断文件是否为空
+                if($("#file").val() == ""){
+                    alert("请上传文件");
+                    return ;
+                }
+
+                var formdata = new FormData();
+
+                formdata.append("file" , file);
+				formdata.append("id" , id);
+
+                var suffix =$("#file").val().substring($("#file").val().indexOf(".")+1).toUpperCase();
+                if(suffix != "JPG" && suffix != "BMP" && suffix != "JPEG" && suffix != "PNG" && suffix != "GIF"){
+                    alert("请上传图片格式的文件");
+                    return ;
+                }
+
+
+                $.ajax({
+                    url :   '/user/upload.do',
+                    data : formdata,
+                    type : "POST" ,
+                    dataType : "text",
+                    processData : false,
+                    contentType : false,
+                    success : function (data) {
+                        if (data == 1) {
+                            alert("上传图片成功");
+                            getSession();
+                        }
+                    }
+
+                });
+            });
+
+            $("#sub-btn").click(function () {
+
+
+//                var pass_status = 0;
+//                var phone_status = 0;
+//                var email_status = 0;
+
+//                判断两次密码
+                var text1 = $("input[type='password']:eq(0)").val().trim();
+                var text2 = $("input[type='password']:eq(1)").val().trim();
+
+                if (text1 != text2 && text2.length <= 6) {
+                    alert("密码不同或小于6位");
+                    return;
+				}
+
+//                判断手机号码
+				var phone = $("#phone").val().trim();
+                if (phone == "") {
+                    alert("请输入手机号");
+				}
+                if (!(/^1[3456789]\d{9}$/.test(phone))) {
+                    alert("手机号码有误");
+                    return;
+                }
+
+//                判断email
+				var email = $("#email").val().trim();
+                if (email == "") {
+                    alert("请输入邮箱");
+                    return;
+                }
+                var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+                var ok= reg.test(email );
+                if (!ok) {
+                    alert("邮箱格式错误");
+                    return;
+                }
+
+
+                $.ajax({
+					url : "/user/reset.do",
+					type : "get",
+					data : {
+					    id : id,
+					    password : text1,
+						phone : phone,
+						email : email
+					},
+					success : function (data) {
+						if (data == 1) {
+						    alert("修改成功");
+						    location.href = "/toMain.do";
+						}
+                    }
+				});
+
+
+            })
+
+
+
+
+
+        });
+
+	</script>
+
+
 	<body>
 		
 		<div class="nav">
@@ -29,7 +196,7 @@
 					
 					<div class="user">
 						<div class="mid-part">
-							<img src="../../resources/image/init.jpg" />
+							<img id="img" src="../../resources/image/init.jpg" />
 							<div class="character">
 								<span>张玮伽</span>
 								<br />
@@ -45,7 +212,7 @@
 					<div class="list">
 						<ul>
 							<li>
-								<a>
+								<a href="/toTask.do">
 									<i class="icon-file"></i>&nbsp;我的待办任务
 								</a>
 							</li>
@@ -94,12 +261,12 @@
 					
 					<div class="info-part">
 					
-						头像修改 ： <input type="text" name="image" placeholder="请选择上传路径"/> 
+						头像修改 ： <input id="img-name" type="text" name="image" placeholder="请选择上传路径"/>
 						<div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
 					        <button class="btn btn-primary fileinput-button" type="button">浏览</button>
-					        <input type="file" id="file" onchange="" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+					        <input type="file" id="file" onchange="loadFile()" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
 					    </div>
-						<button class="btn btn-primary">上传</button>
+						<button id="upload-btn" class="btn btn-primary">上传</button>
 				
 						<br />
 						<br />
@@ -110,14 +277,14 @@
 						<input type="password" placeholder="请再次输入新的密码" />
 						<br />
 						<br />
-						手机号码 ： <input type="text" placeholder="请输入新的手机号码" />
+						手机号码 ： <input id="phone" type="text" placeholder="请输入新的手机号码" />
 						<br />
 						<br />
-						电子邮箱 ： <input type="text" placeholder="请输入新的邮箱账号" />
+						电子邮箱 ： <input id="email" type="text" placeholder="请输入新的邮箱账号" />
 						
 						
 						<br />
-						<button class="btn btn-danger" style="margin-top: 30px; margin-left: 260px; width: 100px;">提交</button>
+						<button id="sub-btn" class="btn btn-danger" style="margin-top: 30px; margin-left: 260px; width: 100px;">提交</button>
 					</div>
 					
 				</div>
@@ -136,7 +303,7 @@
 						
 						<div class="app-part">
 							<div class="block">
-								<a>
+								<a href="/toClient.do">
 									<div>
 										<i class="icon-adjust"></i>
 									</div>

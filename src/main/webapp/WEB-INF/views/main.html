@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		
+		<link rel="stylesheet" type="text/css" href="../../resources/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../resources/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../resources/css/homework.css" />
+		<script src="../../resources/js/jquery.min.js"></script>
+		<script src="../../resources/js/bootstrap.min.js"></script>
+		
+	</head>
+
+
+	<script type="text/javascript">
+
+		var login = false;
+
+		var id;
+		var name;
+		var url;
+
+//		默认选择第一个 -> 用户管理 2:团队管理 3:角色管理
+		var type = 0;
+
+
+        function getSession() {
+
+            $.ajax({
+                url : "/getSession.do",
+                type : "get",
+                dataType : "json",
+                async : true,
+                success : function (data) {
+                    if (data != null) {
+
+                        login = true;
+						id = data.id;
+						name = data.name;
+						url = data.url;
+
+//                      设置用户用户的url !!!
+                        $("#img").attr('src',url);
+                        $("div.character").find("span").text(name);
+
+                        console.log(data);
+                    } else {
+                        login = false;
+					}
+
+                    if (login == false) {
+                        alert("请登录");
+                        location.href = "/toLogin.do";
+					}
+
+
+
+                },
+				error : function (data) {
+					location.href = "/toLogin.do";
+                }
+            });
+
+        }
+
+
+        function getUserList(cur_type) {
+            $.ajax({
+				url : "/user/getUserList.do",
+				type : "get",
+				dataType : "json",
+				success : function (data) {
+					if (data != null) {
+					    console.log("cur_type : " + cur_type);
+					    console.log(data);
+
+					    type = cur_type;
+
+//					    清除table里面的所有东西
+                        $("table").find("tr").remove();
+                        $("ul.menu").find("li").removeClass("active");
+
+
+                        alert("type : " + type + " cur_type : " + cur_type);
+
+
+						if (cur_type == 1 ) {
+
+                            $("ul.menu").find("li:eq(0)").addClass("active");
+                            $("table").append($('<tr>\n' +
+                                '<th>序号</th>\n' +
+                                '<th>用户名</th>\n' +
+                                '<th>姓名</th>\n' +
+                                '<th>性别</th>\n' +
+                                '<th>部门</th>\n' +
+                                '<th>职员</th>\n' +
+                                '<th>联系方式</th>\n' +
+                                '<th>电子邮箱</th>\n' +
+                                '<th>操作</th>\n' +
+                                '</tr>'));
+
+
+                            for (var i in data) {
+                                $("table").append($('<tr>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + i + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].username + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].name + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].sex + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].department + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].duty + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].phone +'</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].email +'</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>\n' +
+                                    '\t\t\t\t\t\t\t\t<a>\n' +
+                                    '\t\t\t\t\t\t\t\t\t<i class="icon-pencil"></i>\n' +
+                                    '\t\t\t\t\t\t\t\t</a>\n' +
+                                    '\t\t\t\t\t\t\t\t&nbsp;\n' +
+                                    '\t\t\t\t\t\t\t\t<a>\n' +
+                                    '\t\t\t\t\t\t\t\t\t<i class="icon-trash"></i>\n' +
+                                    '\t\t\t\t\t\t\t\t</a>\n' +
+                                    '\t\t\t\t\t\t\t</td>\n' +
+                                    '\t\t\t\t\t\t</tr>'));
+                            }
+
+						} else if (cur_type == 2) {
+
+                            $("ul.menu").find("li:eq(1)").addClass("active");
+                            $("table").append($('<tr>\n' +
+                                '<th>序号</th>\n' +
+                                '<th>团队负责人</th>\n' +
+                                '<th>团队名称</th>\n' +
+                                '<th>联系方式</th>\n' +
+                                '<th>电子邮箱</th>\n' +
+                                '<th>操作</th>\n' +
+                                '</tr>'));
+
+
+                            for (var i in data) {
+                                $("table").append($('<tr>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + i + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].name + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].department + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].phone +'</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].email +'</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>\n' +
+                                    '\t\t\t\t\t\t\t\t<a>\n' +
+                                    '\t\t\t\t\t\t\t\t\t<i class="icon-pencil"></i>\n' +
+                                    '\t\t\t\t\t\t\t\t</a>\n' +
+                                    '\t\t\t\t\t\t\t\t&nbsp;\n' +
+                                    '\t\t\t\t\t\t\t\t<a>\n' +
+                                    '\t\t\t\t\t\t\t\t\t<i class="icon-trash"></i>\n' +
+                                    '\t\t\t\t\t\t\t\t</a>\n' +
+                                    '\t\t\t\t\t\t\t</td>\n' +
+                                    '\t\t\t\t\t\t</tr>'));
+                            }
+
+						} else if (cur_type == 3) {
+
+                            $("ul.menu").find("li:eq(2)").addClass("active");
+						    $("table").append($('<tr>\n' +
+                                '<th>序号</th>\n' +
+                                '<th>用户名</th>\n' +
+                                '<th>姓名</th>\n' +
+                                '<th>角色</th>\n' +
+                                '<th>模块</th>\n' +
+                                '<th>操作</th>\n' +
+                                '</tr>'));
+
+                            for (var i in data) {
+                                $("table").append($('<tr>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + i + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].username + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].name + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].role + '</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>' + data[i].module +'</td>\n' +
+                                    '\t\t\t\t\t\t\t<td>\n' +
+                                    '\t\t\t\t\t\t\t\t<a>\n' +
+                                    '\t\t\t\t\t\t\t\t\t<i class="icon-pencil"></i>\n' +
+                                    '\t\t\t\t\t\t\t\t</a>\n' +
+                                    '\t\t\t\t\t\t\t\t&nbsp;\n' +
+                                    '\t\t\t\t\t\t\t\t<a>\n' +
+                                    '\t\t\t\t\t\t\t\t\t<i class="icon-trash"></i>\n' +
+                                    '\t\t\t\t\t\t\t\t</a>\n' +
+                                    '\t\t\t\t\t\t\t</td>\n' +
+                                    '\t\t\t\t\t\t</tr>'));
+                            }
+						}
+
+
+					}
+                }
+			});
+        }
+
+
+        $(function () {
+
+			getSession();
+
+			getUserList(1);
+
+
+
+			$("div.character").find("a:eq(0)").click(function () {
+				location.href = "/toUserInfo.do";
+            });
+
+            $("div.character").find("a:eq(1)").click(function () {
+				$.ajax({
+					url : "/logout.do",
+					type : "get",
+					async : false,
+					success : function () {
+                        alert("已注销");
+						location.href = "toLogin.do";
+                    }
+				});
+
+            });
+
+
+
+            $(document).on("click" , ".menu a" , function () {
+
+			    var cur_type = $(this).data("type");
+			    if (cur_type == type) {
+			        return ;
+				} else {
+			        getUserList(cur_type);
+				}
+
+            });
+
+
+
+
+        });
+
+	</script>
+
+	<body>
+		
+		<div class="nav">
+			<a class="logo" href="#">
+				<img src="../../resources/image/nav.png" />
+			</a>
+			
+			<span>2019-06-17 星期一 15:02</span>
+		</div>
+		
+		<div class="outer">
+			&nbsp;
+			<div class="inner">
+				<div class="left">
+					
+					<div class="user">
+						<div class="mid-part">
+							<img id="img" src="../../resources/image/init.jpg" />
+							<div class="character">
+								<span>张玮伽</span>
+								<br />
+								
+								<a><i class="icon-asterisk"></i></a> &nbsp;
+								<a><i class="icon-signout"></i></a>
+							</div>
+							
+							
+						</div>
+					</div>
+					
+					<div class="list">
+						<ul>
+							<li>
+								<a href="/toTask.do">
+									<i class="icon-file"></i>&nbsp;我的待办任务
+								</a>
+							</li>
+							<li>
+								<a>
+									<i class="icon-file-alt"></i>&nbsp;我的已办任务
+								</a>
+							</li>
+							<li>
+								<a>
+									<i class="icon-bell-alt"></i>&nbsp;提醒消息
+								</a>
+							</li>
+							<li>
+								<a>
+									<i class="icon-bar-chart"></i>&nbsp;我的周报
+								</a>
+							</li>
+							<li>
+								<a>
+									<i class="icon-calendar"></i>&nbsp;我的日志
+								</a>
+							</li>
+							<li>
+								<a>
+									<i class="icon-qrcode"></i>&nbsp;我的项目
+								</a>
+							</li>
+							<li>
+								<a>
+									<i class="icon-legal"></i>&nbsp;我的查封项目资产
+								</a>
+							</li>
+			
+
+						</ul>
+					</div>
+				</div>
+				
+				<div class="middle">
+					<div class="search-part">
+						<div class="left">
+							<span><i class="icon-user"></i> &nbsp;用户管理</span>
+						</div>
+						
+						<div class="right">
+							<input type="text" name="search" placeholder="请输入项目名称"/>
+							<a><i class="icon-search"></i></a>
+						</div>
+					</div>
+					
+					<ul class="menu">
+						<li>
+							<a data-type="1">客户管理</a>
+						</li>
+						
+						<li>
+							<a data-type="2">团队管理</a>
+						</li>
+						
+						<li class="active">
+							<a data-type="3">角色管理</a>
+						</li>
+						
+						<li class="add-btn">
+							<button class="btn btn-primary">新增角色</button>
+						</li>
+						
+					</ul>
+					
+					<table>
+						<tr>
+							<th>序号</th>
+							<th>用户名</th>
+							<th>姓名</th>
+							<th>角色</th>
+							<th>模块</th>
+							<th>操作</th>
+						</tr>
+
+						<tr>
+							<td>1</td>
+							<td>zhangwj</td>
+							<td>张玮伽</td>
+							<td>系统管理员</td>
+							<td>所有模块</td>
+							<td>
+								<a>
+									<i class="icon-pencil"></i>
+								</a>
+								&nbsp;
+								<a>
+									<i class="icon-trash"></i>
+								</a>
+							</td>
+						</tr>
+
+						<tr>
+							<td>2</td>
+							<td>songqing</td>
+							<td>松青</td>
+							<td>普通用户</td>
+							<td>所有模块</td>
+							<td>
+								<a>
+									<i class="icon-pencil"></i>
+								</a>
+								&nbsp;
+								<a>
+									<i class="icon-trash"></i>
+								</a>
+							</td>
+						</tr>
+					</table>
+					
+				</div>
+				
+				<div class="right">
+					<div class="application">
+						<div class="search-part">
+							<div class="left-app">
+								<span><i class="icon-home"></i> &nbsp;我的应用</span>
+							</div>
+							
+							<div class="right-app">
+								<a><i class="icon-plus"></i></a>
+							</div>
+						</div>
+						
+						<div class="app-part">
+							<div class="block">
+								<a href="/toClient.do">
+									<div>
+										<i class="icon-adjust"></i>
+									</div>
+									<div>
+										<span>客户管理</span>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="app-part">
+							<div class="block">
+								<a>
+									<div>
+										<i class="icon-ban-circle"></i>
+									</div>
+									<div>
+										<span>项目管理</span>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="app-part">
+							<div class="block">
+								<a>
+									<div>
+										<i class="icon-bar-chart"></i>
+									</div>
+									<div>
+										<span>用户管理</span>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="app-part">
+							<div class="block">
+								<a>
+									<div>
+										<i class="icon-beaker"></i>
+									</div>
+									<div>
+										<span>团队管理</span>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="app-part">
+							<div class="block">
+								<a>
+									<div>
+										<i class="icon-beer"></i>
+									</div>
+									<div>
+										<span>公司周报</span>
+									</div>
+								</a>
+							</div>
+						</div>
+						
+					</div>
+					<div class="notice">
+						<div class="search-part">
+							<div class="left-app">
+								<span><i class="icon-bell-alt"></i> &nbsp;我的公告</span>
+							</div>
+							
+							<div class="right-app">
+								<a><i class="icon-arrow-right"></i></a>
+							</div>
+						</div>
+						
+						<ul>
+							<li>
+								<a>
+									针对办公规范公告...
+									<span>2019-06-16</span>
+								</a>
+							</li>
+							<li>
+								<a>
+									针对办公规的公告
+									<span>2019-06-16</span>
+								</a>
+							</li>
+							<li>
+								<a>
+									针对办公规范告
+									<span>2019-06-16</span>
+								</a>
+							</li>
+							<li>
+								<a>
+									针对办公规范的公告
+									<span>2019-06-16</span>
+								</a>
+							</li>
+							<li>
+								<a>
+									针对公规范的公告
+									<span>2019-06-16</span>
+								</a>
+							</li>
+						</ul>
+						
+						
+					</div>
+				</div>
+				
+			</div>
+			
+			
+		</div>
+		
+	</body>
+</html>

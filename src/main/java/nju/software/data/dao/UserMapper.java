@@ -25,5 +25,14 @@ public interface UserMapper {
 
 //    自定义接口
 
+
+    User login(String username , String password);
+
+
+    int updateUserUrl(int id , String url);
+
+
+
+
     List<User> getUserList();
 }

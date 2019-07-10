@@ -96,7 +96,7 @@ a:hover{
 }
 
 .outer .inner .left .user{
-	background-image: url(../img/profile-background.jpg);
+	background-image: url(../image/profile-background.jpg);
 	background-size: cover;
     height: 150px;
 }

@@ -11,9 +11,12 @@
     <result column="duty" property="duty" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="module" property="module" jdbcType="VARCHAR" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, password, name, sex, department, duty, phone, email
+    id, username, password, name, sex, department, duty, phone, email, url , module , role
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -28,10 +31,11 @@
   <insert id="insert" parameterType="nju.software.data.dataobject.User" >
     insert into user (id, username, password, 
       name, sex, department,
-      duty, phone, email)
+      duty, phone, email, url , module, role)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR},
-      #{duty,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR})
+      #{duty,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}),
+      #{url,jdbcType=VARCHAR}), #{module,jdbcType=VARCHAR}), #{role,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="nju.software.data.dataobject.User" >
     insert into user
@@ -63,6 +67,15 @@
       <if test="email != null" >
         email,
       </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="module != null" >
+        module,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -91,6 +104,15 @@
       </if>
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="module != null" >
+        #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -121,6 +143,15 @@
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
       </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="module != null" >
+        module = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -133,16 +164,32 @@
       department = #{department,jdbcType=VARCHAR},
       duty = #{duty,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR}
+      email = #{email,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      module = #{module,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
 
 
+  <select id="login" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where username = #{0}
+    and password = #{1}
+  </select>
 
   <select id="getUserList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from user
   </select>
+
+  <update id="updateUserUrl">
+    update user
+    set url = #{1}
+    where id = #{0}
+  </update>
 </mapper>

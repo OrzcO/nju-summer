@@ -16,9 +16,24 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
+    public User login(String username, String password) {
+        return userMapper.login(username , password);
+    }
+
+    @Override
+    public int updateUserUrl(int id, String url) {
+        return userMapper.updateUserUrl(id , url);
+    }
+
+    @Override
     public List<User> getUserList() {
         System.out.println("userService impl  ");
         return userMapper.getUserList();
+    }
+
+    @Override
+    public int updateUser(User user) {
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override

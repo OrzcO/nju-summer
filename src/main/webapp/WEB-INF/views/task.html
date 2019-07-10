@@ -12,6 +12,89 @@
 		<script src="../../resources/js/bootstrap.min.js"></script>
 		
 	</head>
+
+	<script type="text/javascript">
+        var login = false;
+        var name;
+        var url;
+
+        function getSession() {
+
+            $.ajax({
+                url : "/getSession.do",
+                type : "get",
+                dataType : "json",
+                async : true,
+                success : function (data) {
+                    if (data != null) {
+
+                        login = true;
+
+//                      设置用户用户的url !!!
+                        $("#img").attr('src',url);
+                        $("div.character").find("span").text(name);
+
+                        console.log(data);
+                    } else {
+                        login = false;
+                    }
+
+                    if (login == false) {
+                        alert("请登录");
+                        location.href = "/toLogin.do";
+                    }
+
+                },
+                error : function (data) {
+                    location.href = "/toLogin.do";
+                }
+            });
+
+        }
+
+        function getTaskList() {
+            $.ajax({
+                url : "/task/getTaskList.do",
+                type : "get",
+                dataType : "json",
+                success : function (data) {
+                    console.log(data);
+
+                    $("div.task").remove();
+
+                    for (var i in data) {
+                        $("div.middle").append($('<div class="task">\n' +
+                            '\t\t\t\t\t\t<div class="task-header">\n' +
+                            '\t\t\t\t\t\t\t<i class="icon-flag"></i>\n' +
+                            '\t\t\t\t\t\t\t' + data[i].type + '\n' +
+                            '\t\t\t\t\t\t\t<img src="../../resources/image/new.png" />\n' +
+                            '\t\t\t\t\t\t</div>\n' +
+                            '\t\t\t\t\t\t<div class="task-body">\n' +
+                            '\t\t\t\t\t\t\t<img src="../../resources/image/init.jpg" />\n' +
+                            '\t\t\t\t\t\t\t<div style="margin-left: 5px;">\n' +
+                            '\t\t\t\t\t\t\t\t' + data[i].name + '创建日期' + data[i].begin + ' | 截至日期' + data[i].finish + '\n' +
+                            '\t\t\t\t\t\t\t\t<br />\n' +
+                            '\t\t\t\t\t\t\t\t所属项目：\n' + data[i].belong +
+                            '\t\t\t\t\t\t\t</div>\n' +
+                            '\t\t\t\t\t\t\t<div style="margin-left: 430px;">\n' +
+                            '\t\t\t\t\t\t\t\t<button class="btn btn-default">任务跟踪</button>\n' +
+                            '\t\t\t\t\t\t\t</div>\n' +
+                            '\t\t\t\t\t\t</div>\n' +
+                            '\t\t\t\t\t</div>'));
+                    }
+                }
+
+            });
+        }
+
+        $(function () {
+
+            getSession();
+
+            getTaskList();
+        });
+	</script>
+
 	<body>
 		
 		<div class="nav">
@@ -29,7 +112,7 @@
 					
 					<div class="user">
 						<div class="mid-part">
-							<img src="../../resources/image/init.jpg" />
+							<img id="img" src="../../resources/image/init.jpg" />
 							<div class="character">
 								<span>张玮伽</span>
 								<br />
@@ -45,7 +128,7 @@
 					<div class="list">
 						<ul>
 							<li class="active">
-								<a>
+								<a href="/toTask.do">
 									<i class="icon-file"></i>&nbsp;我的待办任务
 								</a>
 							</li>
@@ -219,7 +302,7 @@
 						
 						<div class="app-part">
 							<div class="block">
-								<a>
+								<a href="/toClient.do">
 									<div>
 										<i class="icon-adjust"></i>
 									</div>

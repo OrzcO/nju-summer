@@ -21,6 +21,12 @@ public class User {
 
     private String email;
 
+    private String url;
+
+    private String module;
+
+    private String role;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +97,29 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
+    }
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module == null ? null : module.trim();
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role == null ? null : role.trim();
     }
 }
