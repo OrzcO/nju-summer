@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../../resources/css/bootstrap.min.css" />
+    <script type="text/javascript" src="../../resources/js/jquery.min.js" ></script>
+    <script type="text/javascript" src="../../resources/js/bootstrap.min.js" ></script>
+
+</head>
+
+<script>
+
+    $(function () {
+        $("#test").click(function () {
+            alert("here");
+            $.ajax({
+                url : "/testAjax.do",
+                type : "get",
+                dataType : "text",
+//                dataType : "json",
+                success : function (data) {
+                    if (data == 1){
+                        $("#test").text("测试完毕");
+                        alert("ok")
+                    }
+                    else{
+                        alert("no")
+                    }
+                }
+
+            });
+        });
+
+        $("#testUserList").click(function () {
+            alert("testUserList");
+            $.ajax({
+                url : "/getUserList.do",
+                type : "get",
+                dataType : "json",
+                success : function (data) {
+                    console.log("data : " + data);
+                    alert("OK");
+                }
+
+            });
+        });
+    });
+
+</script>
+
+<body>
+
+    <form action="/login.do">
+        username : <input type="text" name="username"> <br>
+        password : <input type="password" name="password"> <br>
+        <input type="submit" value="提交">
+    </form>
+
+    <div id="test">点我测试ajax包</div>
+    <div id="testUserList">testUserList</div>
+<ul class="pagination">
+    <li>
+    <a class="active" href="#">1</a>
+    </li>
+    <li>
+    <a href="#">2</a>
+    </li>
+    <li>
+    <a href="#">3</a>
+    </li>
+    <li>
+    <a href="#">4</a>
+    </li>
+    <li>
+    <a href="#">下一页</a>
+    </li>
+</ul>
+
+</body>
+</html>

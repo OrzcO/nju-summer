@@ -1,0 +1,369 @@
+a {
+	cursor: pointer;
+	color: black;
+}
+
+a:hover{
+	text-decoration: none;
+	color: black;
+}
+
+
+/*登录部分*/
+.login-body {
+	background-color: #FFFFFF;
+	width: 360px;
+	/*height: 500px;*/
+	left: 38%;
+	top: 30%;
+	position: absolute;
+    padding: 50px 50px;
+    font-size: 15px;
+    opacity: 0.8;
+    border: 1px solid #888888;
+    border-radius: 5px;
+    box-shadow: -1px 0 0 #CCCCCC , 0 -1px 0 #CCCCCC , 0 1px 0 #CCCCCC , 0 0 0 1px #CCCCCC;
+}
+
+.login-body .right{
+	text-align: right;
+	padding-bottom: 30px;
+}
+
+.login-body .middle{
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.login-body .full{
+	width: 100%;
+}
+
+.login-body .right input{
+    width: 20px;
+    height: 20px;
+    border: 1px solid;
+    background-color: #FFF;
+    margin-right: 5px;
+}
+
+
+
+/*主页部分*/
+
+/*nav部分*/
+.nav {
+    background-color: #fff;
+    border-color: #f0f0f0;
+}
+
+.nav .logo{
+	float: left;
+    height: 90px;
+    padding: 0;
+}
+
+.nav .logo img {
+	height: 100%;
+}
+
+.nav span{
+	float: right;
+    height: 30px;
+    font-size: 17px;
+    margin: 30px;
+}
+
+/*主体部分*/
+.outer{
+	font-size: 3px;
+	background-color:#C0C0C0;
+}
+
+.outer .inner{
+	padding: 20px;
+	background-color: #E3E3E3;
+	font-size: 15px;
+	
+	/*保证这几个块并列的关键代码*/
+	position: relative;
+    display: flex;
+}
+
+.outer .inner .left{
+	width: 200px;
+	font-size: 15px;
+}
+
+.outer .inner .left .user{
+	background-image: url(../img/profile-background.jpg);
+	background-size: cover;
+    height: 150px;
+}
+
+.outer .inner .left .user .mid-part{
+	border-radius: 50%;
+    padding: 27% 27%;
+    display: flex;
+    align-items: center;
+}
+.outer .inner .left .user img{
+    border-radius: 50%;
+	vertical-align: middle;
+	border: 0;
+	width: 35px;
+	height: 35px;
+}
+
+.outer .inner .left .user .mid-part .character{
+	margin-left: 3px;
+}
+
+
+.outer .inner .left .list{
+	height: 400px;
+	margin-top: 15px;
+	background-color: #F8F8F8;
+}
+
+.outer .inner .left .list ul{
+	list-style: none;
+    margin-bottom: 0px;
+    padding: 20px 0 0 0;
+}
+
+.outer .inner .left .list ul a{
+    display: block;
+    height: 40px;
+    line-height: 20px;
+    padding: 10px 0 10px 50px;
+    font-size: 13px;
+    color: #333;
+    position: relative;
+}
+
+
+.outer .inner .left .list ul .active{
+	background-color: #FFFFFF;
+	color: red;
+	border-left: 3px solid red;
+}
+
+
+.outer .inner .middle{
+	width: 900px;
+	height: 565px;
+	background-color: #FFFFFF;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.outer .inner .right{
+	width: 300px;
+	height: 565px;
+	
+}
+
+.outer .inner .right .application{
+	background-color: #F8F8F8;
+	height: 250px;
+}
+
+.outer .inner .right .notice{
+	margin-top: 20px;
+	background-color: #F8F8F8;
+	height: 295px;
+}
+
+.outer .inner .search-part{
+	height: 40px;
+	border-bottom: 1px solid #777777;
+}
+
+.outer .inner .search-part .left{
+	float: left;
+	height: 20px;
+	margin: 10px;
+	
+}
+.outer .inner .search-part .right{
+    width: 230px;
+	float: right;
+	height: 30px;
+	margin: 5px;
+}
+
+.outer .inner .search-part .left-app{
+    float: left;
+	height: 20px;
+	margin: 10px;
+}
+
+.outer .inner .search-part .right-app{
+    width: 50px;
+	float: right;
+	height: 20px;
+	margin: 10px;
+    text-align: center;
+}
+
+.outer .inner .search-part .client-right{
+    width: 300px;
+	float: right;
+	height: 30px;
+	margin: 5px;
+    text-align: center;
+}
+.outer .inner .search-part .right a{
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+}
+
+.outer .inner .menu{
+	list-style: none;
+	padding-left: 20px;
+}
+
+.menu li{
+	position: relative;
+    display: inline-block;
+    padding: 8px 10px;
+    line-height: 20px;
+}
+
+.menu .active{
+	color: red;
+	border-bottom: 2px solid red;
+}
+.menu .add-btn{
+	float: right;
+	padding: 8px 10px;
+}
+.menu a {
+	color: blue;
+}
+
+.menu .active a{
+	color: red;
+}
+
+.menu li a{
+	font-size: 15px;
+}
+
+table {
+    width: 98%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    margin-left: 10px;
+
+}
+
+table tr {
+	border-top: 1px solid #ebedf2;
+	border-bottom: 1px solid #ebedf2;
+}
+table th {
+    vertical-align: bottom;
+    border-left: 1px solid #ebedf2;
+    border-right: 1px solid #ebedf2;
+    font-size: 15px;
+    line-height: 1;
+    padding: 0.9375rem;
+    text-align: center;
+}
+
+table td {
+	color: #222222;
+	text-align: center;
+    vertical-align: middle;
+    font-size: 15px;
+    line-height: 1;
+    padding: 0.9375rem;
+    border-left: 1px solid #ebedf2;
+    border-right: 1px solid #ebedf2;
+}
+
+.outer .inner .application .app-part{
+	font-size: 12px;
+	width: 75px;
+	height: 75px;
+	float: left;
+	position: relative;
+}
+
+.outer .inner .application .app-part .block{
+	width: 55px;
+	height: 55px;
+	margin: 10px;
+	text-align: center;
+	vertical-align: middle;
+}
+.outer .inner .application .app-part i{
+	display: inline-block;
+	font-size: 30px;
+	margin-top: 10px;
+	text-align: center;
+}
+.outer .inner .application .app-part span{
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+
+.notice ul{
+	margin-top: 20px;
+	font-size: 15px;
+}
+
+.notice ul li{
+	padding: 2px 0;
+}
+
+.notice ul li span{
+	font-size: 12px;
+	padding-right: 15px;
+	float: right;
+	color: #737373;
+}
+
+
+.outer .inner .middle .info-part{
+	padding: 25px;
+	margin-left: 30%;
+}
+
+.outer .inner .middle .task{
+	padding: 10px 10px;
+	margin: 0 20px;
+	border-top: 1px solid #E8E8E8;
+	border-bottom: 1px solid #E8E8E8;
+}
+
+.outer .inner .middle .task .task-header img{
+    vertical-align: middle;
+    border: 0;
+    /*width: 35px;
+    height: 35px;*/
+}
+.outer .inner .middle .task .task-body {
+	margin-top: 10px;
+	font-size: 12px;
+	color: #333333;
+	
+	/*保证布局不换行*/
+	display: flex;
+    align-items: center;
+}
+.outer .inner .middle .task .task-body img{
+    vertical-align: middle;
+    border: 0;
+    width: 40px;
+    height: 40px;
+}
