@@ -125,6 +125,24 @@
 				});
             });
 
+
+            $("div.character").find("a:eq(0)").click(function () {
+                location.href = "/toUserInfo.do";
+            });
+
+            $("div.character").find("a:eq(1)").click(function () {
+                $.ajax({
+                    url : "/logout.do",
+                    type : "get",
+                    async : false,
+                    success : function () {
+                        alert("已注销");
+                        location.href = "toLogin.do";
+                    }
+                });
+
+            });
+
         });
 
 	</script>

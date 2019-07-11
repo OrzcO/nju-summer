@@ -52,6 +52,13 @@
 
         }
 
+//        JsonFormat不生效  在前端强制将Long转为Date类型可以显示的数据
+        function dateTransform(time) {
+            var date = new Date(time);
+            var transDate = date.toLocaleString();
+            return transDate.substring(0 , transDate.indexOf(" "));
+        }
+
         function getTaskList() {
             $.ajax({
                 url : "/task/getTaskList.do",
@@ -63,6 +70,11 @@
                     $("div.task").remove();
 
                     for (var i in data) {
+
+//                        强制刷新date类型的数据
+                        data[i].begin = dateTransform(data[i].begin);
+                        data[i].finish = dateTransform(data[i].finish);
+
                         $("div.middle").append($('<div class="task">\n' +
                             '\t\t\t\t\t\t<div class="task-header">\n' +
                             '\t\t\t\t\t\t\t<i class="icon-flag"></i>\n' +
@@ -71,12 +83,12 @@
                             '\t\t\t\t\t\t</div>\n' +
                             '\t\t\t\t\t\t<div class="task-body">\n' +
                             '\t\t\t\t\t\t\t<img src="../../resources/image/init.jpg" />\n' +
-                            '\t\t\t\t\t\t\t<div style="margin-left: 5px;">\n' +
+                            '\t\t\t\t\t\t\t<div style="margin-left: 5px; width : 250px;">\n' +
                             '\t\t\t\t\t\t\t\t' + data[i].name + '创建日期' + data[i].begin + ' | 截至日期' + data[i].finish + '\n' +
                             '\t\t\t\t\t\t\t\t<br />\n' +
                             '\t\t\t\t\t\t\t\t所属项目：\n' + data[i].belong +
                             '\t\t\t\t\t\t\t</div>\n' +
-                            '\t\t\t\t\t\t\t<div style="margin-left: 430px;">\n' +
+                            '\t\t\t\t\t\t\t<div style="margin-left: 430px; ">\n' +
                             '\t\t\t\t\t\t\t\t<button class="btn btn-default">任务跟踪</button>\n' +
                             '\t\t\t\t\t\t\t</div>\n' +
                             '\t\t\t\t\t\t</div>\n' +
@@ -92,6 +104,24 @@
             getSession();
 
             getTaskList();
+
+
+            $("div.character").find("a:eq(0)").click(function () {
+                location.href = "/toUserInfo.do";
+            });
+
+            $("div.character").find("a:eq(1)").click(function () {
+                $.ajax({
+                    url : "/logout.do",
+                    type : "get",
+                    async : false,
+                    success : function () {
+                        alert("已注销");
+                        location.href = "toLogin.do";
+                    }
+                });
+
+            });
         });
 	</script>
 

@@ -24,7 +24,7 @@
   </delete>
   <insert id="insert" parameterType="nju.software.data.dataobject.Task" >
     insert into task (id, name, begin, 
-      finish, belong)
+      finish, belong ,type)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{begin,jdbcType=TIMESTAMP}, 
       #{finish,jdbcType=TIMESTAMP}, #{belong,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
   </insert>

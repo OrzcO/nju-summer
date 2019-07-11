@@ -51,13 +51,22 @@ public class UserController {
         filename = "user-" + id  +  file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
         path = basePath + File.separator + filename;
 
-        System.out.println("filename : " + filename);
+//        System.out.println("filename : " + filename);
         System.out.println("path : " + path);
         File FILE = new File(path);
 
         file.transferTo(FILE);
 
-        userService.updateUserUrl(id , path);
+        System.out.println("updateUrl : " + id + " - " + "/upload/" + filename);
+        int ans = userService.updateUserUrl(id , "/upload/" + filename);
+
+        System.out.println("updateUrl ans : " + ans);
+
+
+//        update Session url
+        HttpSession httpSession = httpServletRequest.getSession();
+        User user = userService.selectByPrimaryKey(id);
+        httpSession.setAttribute("user" , user);
 
         return 1;
 

@@ -13,8 +13,13 @@
 	<mvc:annotation-driven />
 	<context:component-scan base-package="nju.software.*" />
 
+<!--multipartResolver-->
 
-
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="maxUploadSize" value="52428800"></property>
+		<property name="maxInMemorySize" value="10960"></property>
+	</bean>
 
 
 	<bean id="viewResolver"

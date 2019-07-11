@@ -100,6 +100,7 @@
                     dataType : "text",
                     processData : false,
                     contentType : false,
+					async : true,
                     success : function (data) {
                         if (data == 1) {
                             alert("上传图片成功");
@@ -171,6 +172,22 @@
             })
 
 
+            $("div.character").find("a:eq(0)").click(function () {
+                location.href = "/toUserInfo.do";
+            });
+
+            $("div.character").find("a:eq(1)").click(function () {
+                $.ajax({
+                    url : "/logout.do",
+                    type : "get",
+                    async : false,
+                    success : function () {
+                        alert("已注销");
+                        location.href = "toLogin.do";
+                    }
+                });
+
+            });
 
 
 
