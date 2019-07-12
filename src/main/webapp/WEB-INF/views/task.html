@@ -99,12 +99,40 @@
             });
         }
 
+
+        function getNoticeList() {
+            $.ajax({
+                url : "/notice/getNoticeList.do",
+                type : "get",
+                dataType : "json",
+                success : function (data) {
+                    console.log(data);
+
+
+                    $(".notice").find("ul li").remove();
+                    for (var i in data) {
+
+                        data[i].publish = dateTransform(data[i].publish);
+
+                        $(".notice ul").append($('<li>\n' +
+                            '\t\t\t\t\t\t\t\t<a>\n' +
+                            '\t\t\t\t\t\t\t\t\t'  + data[i].info.substring(0 , 10) + '...' + '\n' +
+                            '\t\t\t\t\t\t\t\t\t<span>' + data[i].publish + '</span>\n' +
+                            '\t\t\t\t\t\t\t\t</a>\n' +
+                            '\t\t\t\t\t\t\t</li>'));
+                    }
+                }
+            });
+        }
+
+
         $(function () {
 
             getSession();
 
             getTaskList();
 
+            getNoticeList();
 
             $("div.character").find("a:eq(0)").click(function () {
                 location.href = "/toUserInfo.do";
