@@ -10,7 +10,7 @@
 
   <properties>
     <junit.version>4.7</junit.version>
-    <commons.collection.version>3.1</commons.collection.version>
+    <commons.collection.version>3.2.2</commons.collection.version>
     <javassist.version>3.4.GA</javassist.version>
     <servlet.api.version>2.5</servlet.api.version>
     <spring.core.version>3.1.0.RELEASE</spring.core.version>
