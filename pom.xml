@@ -13,7 +13,7 @@
     <commons.collection.version>3.1</commons.collection.version>
     <javassist.version>3.4.GA</javassist.version>
     <servlet.api.version>2.5</servlet.api.version>
-    <spring.core.version>3.1.0.RELEASE</spring.core.version>
+    <spring.core.version>5.2.22.RELEASE</spring.core.version>
     <commons.logging.version>1.1.1</commons.logging.version>
     <log4j.version>1.2.14</log4j.version>
     <slf4j.core.version>1.6.3</slf4j.core.version>
