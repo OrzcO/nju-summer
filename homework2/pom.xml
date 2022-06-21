@@ -26,7 +26,7 @@
     <ehcache.core.version>2.5.1</ehcache.core.version>
     <servlet.jstl.version>1.2</servlet.jstl.version>
     <hibernate.annotation.version>3.4.0.GA</hibernate.annotation.version>
-    <mysql.driver.version>5.1.18</mysql.driver.version>
+    <mysql.driver.version>8.0.28</mysql.driver.version>
     <hibernate.core.version>3.2.6.ga</hibernate.core.version>
     <persistence.api.version>1.0</persistence.api.version>
     <commons.dbcp.version>1.3</commons.dbcp.version>
